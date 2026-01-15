@@ -1,0 +1,203 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String   @id @default(cuid())
+  googleId      String?  @unique
+  email         String   @unique
+  password      String?
+  name          String
+  photo         String?
+  dateOfBirth   DateTime?
+  placeOfBirth  String?
+  phone         String?
+  address       String?
+  role          Role     @default(USER)
+  isVerified    Boolean  @default(false)
+  otp           String?
+  otpExpiresAt  DateTime?
+
+  donations     Donate[]
+  donateLogs    DonateLog[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Campaign {
+  id             String           @id @default(cuid())
+  name           String
+  description    String
+  location       String
+  province       String?
+  city           String?
+  startDate      DateTime
+  endDate        DateTime?
+  status         CampaignStatus   @default(DRAFT)
+  targetDonation Decimal?         @db.Decimal(15, 2)
+  totalDonation  Decimal          @default(0) @db.Decimal(15, 2)
+  totalDonors    Int              @default(0)
+  imageUrl       String?
+  category       CampaignCategory
+  type           CampaignType     @default(CHARITY)
+
+  donations      Donate[]
+  news           News[]
+
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@index([status])
+  @@index([category])
+  @@index([type])
+  @@index([startDate])
+}
+
+model Donate {
+  id            String        @id @default(cuid())
+  
+  userId        String?
+  user          User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  campaignId    String
+  campaign      Campaign      @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  amount        Decimal       @db.Decimal(15, 2)
+  message       String?
+  isAnonymous   Boolean       @default(false)
+  paymentMethod PaymentMethod
+  paymentStatus PaymentStatus @default(PENDING)
+
+  donorName     String?
+  donorEmail    String?
+  donorPhone    String?
+
+  paymentId     String?
+  paymentProof  String?
+
+  logs          DonateLog[]
+
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([campaignId])
+  @@index([paymentStatus])
+  @@index([createdAt])
+  @@index([paymentId])
+}
+
+model DonateLog {
+  id          String        @id @default(cuid())
+  donateId    String
+  donate      Donate        @relation(fields: [donateId], references: [id], onDelete: Cascade)
+
+  oldStatus   PaymentStatus?
+  newStatus   PaymentStatus
+  note        String?
+
+  changedById String?
+  changedBy   User?         @relation(fields: [changedById], references: [id], onDelete: SetNull)
+
+  createdAt   DateTime      @default(now())
+
+  @@index([donateId])
+  @@index([createdAt])
+}
+
+model News {
+  id           String        @id @default(cuid())
+  title        String
+  content      String
+  excerpt      String?
+  author       String
+
+  campaignId   String?
+  campaign     Campaign?     @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+
+  category     NewsCategory
+  tags         String[]
+
+  imageUrl     String?
+  thumbnailUrl String?
+
+  isPublished  Boolean       @default(false)
+  publishedAt  DateTime?
+
+  viewCount    Int           @default(0)
+  slug         String        @unique
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([campaignId])
+  @@index([category])
+  @@index([isPublished])
+  @@index([publishedAt])
+  @@index([slug])
+}
+
+enum Role {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum CampaignStatus {
+  DRAFT
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+enum CampaignCategory {
+  NATURAL_DISASTER
+  SOCIAL
+  HEALTH
+  EDUCATION
+  ENVIRONMENT
+  ANIMAL_WELFARE
+  COMMUNITY
+  EMERGENCY
+  OTHER
+}
+
+enum CampaignType {
+  DISASTER
+  CHARITY
+  EVENT
+  FUNDRAISER
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER
+  CREDIT_CARD
+  E_WALLET
+  CASH
+  OTHER
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  SUCCESS
+  FAILED
+  CANCELLED
+  EXPIRED
+}
+
+enum NewsCategory {
+  DISASTER_UPDATE
+  SUCCESS_STORY
+  DONATION_REPORT
+  EDUCATION
+  GENERAL
+  CAMPAIGN_UPDATE
+  ACHIEVEMENT
+}
