@@ -1,0 +1,93 @@
+.anim1 {
+  /* width: ; */
+  border-radius: 100%;
+  width: 400px;
+  height: 400px;
+  animation: scaleIn 2s normal ease-in-out forwards;
+}
+
+.animtextlogo {
+  animation: backgroundLeftIn 1.2s normal ease-in-out forwards;
+  animation-delay: .8s;
+  background-color: var(--color-primary);
+}
+
+.anim2 {
+  animation: 
+    backgroundLeftIn2 1s ease-in-out forwards 2s,
+    yTopOut 2s ease-in-out forwards 5s; /* delay 3s agar jalan setelah animasi pertama */
+  /* animation-delay: 2s; */
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 0;
+  z-index: 999;
+}
+.anim3 {
+  animation: xRightOut 1s normal ease-in-out forwards;
+  animation-delay: 2s;
+}
+.anim4 {
+  animation: xRightOut2 1.5s normal ease-in-out forwards;
+  animation-delay: 2s;
+}
+@keyframes scaleIn {
+  0% {
+    scale: 0;
+  }  
+  100% {
+    scale: 15;
+  }
+}
+@keyframes backgroundLeftIn {
+  from {
+    /* background: transparent; */
+    width: 0;
+  }  
+  to {
+    width: 100%;
+  }
+}
+@keyframes backgroundLeftIn2 {
+  from {
+    /* background: transparent; */
+    width: 0;
+    left: 0;
+  }  
+  to {
+    left: 0;
+    width: 100%;
+  }
+}
+@keyframes xRightOut {
+  from {
+    /* background: transparent; */
+    /* width: 0; */
+    transform: translateX(0);
+  }  
+  to {
+    transform: translateX(1000%);
+    display: none;
+  }
+}
+@keyframes xRightOut2 {
+  from {
+    /* background: transparent; */
+    /* width: 0; */
+    transform: translateX(0);
+  }  
+  to {
+    transform: translateX(800%);
+    display: none;
+  }
+}
+@keyframes yTopOut {
+  from {
+    /* background: transparent; */
+    /* width: 0; */
+    transform: translateY(0);
+  }  
+  to {
+    transform: translateY(-200%);
+  }
+}

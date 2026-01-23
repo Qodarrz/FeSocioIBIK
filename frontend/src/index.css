@@ -1,0 +1,595 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  /* Font Family */
+  --font-sans: "Outfit", system-ui, -apple-system, sans-serif;
+
+  /* Light Mode - Sesuai palet warna */
+  --color-primary: #016b61; /* Hijau tua */
+  --color-secondary: #70b2b2; /* Hijau medium */
+  --color-tertiary: #e5e9c5; /* Krem hijau muda */
+  --color-background: #ffffff; /* Putih */
+  --color-accent: #9ecfd4; /* Biru hijau muda */
+  --color-text: #1f2937; /* Abu-abu gelap untuk teks utama */
+  --color-textBody: #4b5563; /* Abu-abu medium untuk teks body */
+
+  /* Dark Mode - Variasi gelap dari palet warna */
+  --color-primaryDark: #70b2b2; /* Hijau medium menjadi primary di dark mode */
+  --color-secondaryDark: #9ecfd4; /* Biru hijau muda menjadi secondary */
+  --color-tertiaryDark: #016b61; /* Hijau tua menjadi tertiary */
+  --color-backgroundDark: #111827; /* Abu-abu sangat gelap */
+  --color-accentDark: #e5e9c5; /* Krem hijau muda menjadi accent */
+  --color-textDark: #f9fafb; /* Putih untuk teks utama */
+  --color-textBodyDark: #d1d5db; /* Abu-abu terang untuk teks body */
+
+  /* Warna tambahan untuk consistency */
+  --color-success: #016b61;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #9ecfd4;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Reset dan base styles */
+* {
+  font-family: "Outfit", system-ui, -apple-system, sans-serif;
+}
+
+html {
+  font-family: "Outfit", system-ui, -apple-system, sans-serif;
+  scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Sweet Alert */
+.swal2-popup.dark-swal {
+  background-color: var(--color-backgroundDark) !important;
+  color: var(--color-textDark) !important;
+  font-family: "Outfit", sans-serif !important;
+}
+
+.swal2-title,
+.swal2-content {
+  color: inherit !important;
+  font-family: "Outfit", sans-serif !important;
+}
+
+/* Scrollbar style untuk modern look */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(1, 107, 97, 0.3);
+  border-radius: 8px;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(1, 107, 97, 0.5);
+}
+
+/* Dark mode scrollbar */
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(112, 178, 178, 0.3);
+}
+
+.dark .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(112, 178, 178, 0.5);
+}
+
+/* Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(1, 107, 97, 0.3) transparent;
+}
+
+.custom-scrollbar:hover {
+  scrollbar-color: rgba(1, 107, 97, 0.5) transparent;
+}
+
+.dark .custom-scrollbar {
+  scrollbar-color: rgba(112, 178, 178, 0.3) transparent;
+}
+
+.dark .custom-scrollbar:hover {
+  scrollbar-color: rgba(112, 178, 178, 0.5) transparent;
+}
+
+/* Background images dengan overlay sesuai palet warna */
+.banner1 {
+  width: 100%;
+  background: linear-gradient(
+      to top,
+      rgba(1, 107, 97, 0.8) 30%,
+      transparent 100%
+    ),
+    url("/images/banner1.jpg") center center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  overflow: hidden;
+}
+
+.bg-lapor {
+  background: linear-gradient(rgba(1, 107, 97, 0.9), rgba(1, 107, 97, 0.9)),
+    url("/images/banner1.jpg") center center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.bg-coverProfile {
+  background: linear-gradient(rgba(1, 107, 97, 0.8), rgba(1, 107, 97, 0.8)),
+    url("/images/banner2.jpg");
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+/* Loading animation */
+.loading-box {
+  opacity: 0;
+  animation: loadSkeleton 0.8s infinite ease-in-out alternate;
+}
+
+@keyframes loadSkeleton {
+  0% {
+    opacity: 0;
+    background-color: rgba(229, 233, 197, 0.1);
+  }
+  100% {
+    opacity: 0.1;
+    background-color: rgba(229, 233, 197, 0.3);
+  }
+}
+
+/* AI Chat Styles dengan palet baru */
+.btn-ai {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  animation: bounceDownUp 1s ease infinite alternate;
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.btn-ai:hover {
+  background-color: var(--color-secondary);
+  transform: scale(1.05);
+}
+
+.popup-ai {
+  width: 300px;
+  height: 430px;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-accent);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(1, 107, 97, 0.1);
+}
+
+.dark .popup-ai {
+  background-color: var(--color-backgroundDark);
+  border-color: var(--color-accentDark);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.img-greenai {
+  width: 30px;
+  height: 30px;
+}
+
+.body-chat-greenai {
+  height: 75%;
+  margin-bottom: 10px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.body-chat-greenai::-webkit-scrollbar {
+  display: none;
+}
+
+.bubble {
+  width: 100%;
+  padding-inline: 12px;
+  padding-block: 8px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  font-family: "Outfit", sans-serif;
+}
+
+.bubble-ai {
+  background-color: var(--color-tertiary);
+  color: var(--color-text);
+  border: 1px solid var(--color-accent);
+}
+
+.dark .bubble-ai {
+  background-color: rgba(30, 41, 59, 0.5);
+  color: var(--color-textDark);
+  border-color: var(--color-accentDark);
+}
+
+.bubble-user {
+  background-color: var(--color-primary);
+  color: white;
+  text-align: right;
+}
+
+.sender {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-family: "Outfit", sans-serif;
+}
+
+.sender-ai {
+  color: var(--color-primary);
+}
+
+.dark .sender-ai {
+  color: var(--color-primaryDark);
+}
+
+.sender-user {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.mess-greenai {
+  font-size: 14px;
+  line-height: 1.4;
+  font-family: "Outfit", sans-serif;
+}
+
+@keyframes bounceDownUp {
+  0% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(5px);
+  }
+}
+
+.span-hover-greenai {
+  position: absolute;
+  top: -40px;
+  left: -45px;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+  opacity: 0;
+  border-radius: 20px 20px 5px 20px;
+  background-color: var(--color-primary);
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  font-family: "Outfit", sans-serif;
+}
+
+.con-btn-ai:hover .span-hover-greenai {
+  opacity: 1 !important;
+}
+
+/* Loader dengan palet baru */
+.loader {
+  width: 30px;
+  aspect-ratio: 2;
+  margin-top: 10px !important;
+  margin-bottom: 16px !important;
+  --_g: no-repeat
+    radial-gradient(circle closest-side, var(--color-primary) 90%, #0000);
+  background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
+  background-size: calc(100% / 3) 50%;
+  animation: l3 1s infinite linear;
+}
+
+.loader-post {
+  width: 30px;
+  aspect-ratio: 2;
+  margin-top: 10px !important;
+  margin-bottom: 16px !important;
+  --_g: no-repeat
+    radial-gradient(circle closest-side, var(--color-tertiary) 90%, #0000);
+  background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
+  background-size: calc(100% / 3) 50%;
+  animation: l3 1s infinite linear;
+}
+
+.dark .loader-post {
+  --_g: no-repeat
+    radial-gradient(circle closest-side, var(--color-accentDark) 90%, #0000);
+}
+
+@keyframes l3 {
+  20% {
+    background-position: 0% 0%, 50% 50%, 100% 50%;
+  }
+  40% {
+    background-position: 0% 100%, 50% 0%, 100% 50%;
+  }
+  60% {
+    background-position: 0% 50%, 50% 100%, 100% 0%;
+  }
+  80% {
+    background-position: 0% 50%, 50% 50%, 100% 100%;
+  }
+}
+
+/* Utility classes tambahan */
+.text-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sm-scope .staggered-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2em;
+  background: transparent;
+  pointer-events: none;
+  z-index: 20;
+  position: relative; /* Pastikan ini ada */
+  will-change: transform; /* Optimasi performa animasi */
+}
+
+/* Untuk mobile, tidak ada animasi header */
+@media (max-width: 767px) {
+  .sm-scope .staggered-menu-header {
+    transform: none !important;
+  }
+}
+
+.border-gradient {
+  border: 2px solid transparent;
+  background: linear-gradient(var(--color-background), var(--color-background))
+      padding-box,
+    linear-gradient(135deg, var(--color-primary), var(--color-accent))
+      border-box;
+}
+
+.dark .border-gradient {
+  background: linear-gradient(
+        var(--color-backgroundDark),
+        var(--color-backgroundDark)
+      )
+      padding-box,
+    linear-gradient(135deg, var(--color-primaryDark), var(--color-accentDark))
+      border-box;
+}
+
+/* Hover effects untuk elemen interaktif */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(1, 107, 97, 0.15);
+}
+
+.dark .hover-lift:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* 3. Border Reveal */
+.btn-border-reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-border-reveal::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--color-secondary);
+  transition: width 0.3s ease;
+  z-index: -1;
+}
+
+.btn-border-reveal:hover::after {
+  width: 100%;
+}
+
+.btn-border-reveal:hover {
+  color: white;
+}
+
+.btn-border-reveal2 {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-border-reveal2::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--color-primary);
+  transition: width 0.3s ease;
+  z-index: -1;
+}
+
+.btn-border-reveal2:hover::after {
+  width: 100%;
+}
+
+.btn-border-reveal2:hover {
+  color: white;
+}
+
+.fancy {
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    background-image: url("data:image/svg+xml,%3Csvg width='2250' height='900' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg%3E%3Cpath fill='%2300A080' d='M0 0h2255v899H0z'/%3E%3Ccircle cx='366' cy='207' r='366' fill='%2300FDCF'/%3E%3Ccircle cx='1777.5' cy='318.5' r='477.5' fill='%2300FDCF'/%3E%3Ccircle cx='1215' cy='737' r='366' fill='%23008060'/%3E%3C/g%3E%3C/svg%3E%0A");
+    background-size: 110% auto;
+    background-position: center;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  /* Radius */
+  --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  /* Warna Light Mode - Mapping dari @theme */
+  --background: #ffffff; /* Putih */
+  --foreground: #1f2937; /* Teks utama */
+  --card: #e5e9c5; /* Krem hijau muda */
+  --card-foreground: #1f2937;
+  --popover: #e5e9c5;
+  --popover-foreground: #1f2937;
+  --primary: #016b61; /* Hijau tua */
+  --primary-foreground: #ffffff;
+  --secondary: #70b2b2; /* Hijau medium */
+  --secondary-foreground: #1f2937;
+  --muted: #e5e9c5;
+  --muted-foreground: #4b5563;
+  --accent: #9ecfd4; /* Biru hijau muda */
+  --accent-foreground: #1f2937;
+  --destructive: #ef4444;
+  --border: #016b61;
+  --input: #e5e9c5;
+  --ring: #016b61;
+  --chart-1: #016b61;
+  --chart-2: #70b2b2;
+  --chart-3: #e5e9c5;
+  --chart-4: #9ecfd4;
+  --chart-5: #016b61;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1f2937;
+  --sidebar-primary: #016b61;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #70b2b2;
+  --sidebar-accent-foreground: #1f2937;
+  --sidebar-border: #e5e9c5;
+  --sidebar-ring: #016b61;
+}
+
+.dark {
+  /* Radius tetap sama */
+  --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  /* Warna Dark Mode - Mapping dari @theme Dark */
+  --background: #000000; /* Abu gelap */
+  --foreground: #f9fafb; /* Teks putih */
+  --card: #016b61; /* Hijau tua jadi card di dark */
+  --card-foreground: #f9fafb;
+  --popover: #016b61;
+  --popover-foreground: #f9fafb;
+  --primary: #016b61; /* Hijau medium jadi primary */
+  --primary-foreground: #1f2937;
+  --secondary: #9ecfd4; /* Biru hijau muda */
+  --secondary-foreground: #111827;
+  --muted: #016b61;
+  --muted-foreground: #d1d5db;
+  --accent: #e5e9c5; /* Krem hijau muda */
+  --accent-foreground: #111827;
+  --destructive: #ef4444;
+  --border: #70b2b2;
+  --input: #016b61;
+  --ring: #70b2b2;
+  --chart-1: #70b2b2;
+  --chart-2: #9ecfd4;
+  --chart-3: #016b61;
+  --chart-4: #e5e9c5;
+  --chart-5: #70b2b2;
+  --sidebar: #016b61;
+  --sidebar-foreground: #f9fafb;
+  --sidebar-primary: #70b2b2;
+  --sidebar-primary-foreground: #f9fafb;
+  --sidebar-accent: #9ecfd4;
+  --sidebar-accent-foreground: #f9fafb;
+  --sidebar-border: #70b2b2;
+  --sidebar-ring: #9ecfd4;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
